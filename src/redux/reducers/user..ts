@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { RootState } from 'redux/store';
 import { User } from 'types/redux';
 import jwtDecode from 'jwt-decode';
@@ -29,10 +30,13 @@ const userReducer = (state = initialState, action: Action) => {
         ...state,
         isLoggedIn: false,
       };
-
     case 'LOGIN_SUCCESS':
+      // @ts-ignore
+      // eslint-disable-next-line no-case-declarations
+      const { sub: id } = jwtDecode<{ sub: number }>(action.payload.accessToken);
       return {
         ...state,
+        id,
         isLoggedIn: true,
       };
 
