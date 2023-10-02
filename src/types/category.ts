@@ -4,10 +4,7 @@ export type CategoryType = {
   imageUrl: string;
   name: string;
 };
-export type CategoriesDataType = {
-  totalItems: number;
-  items: Array<CategoryType>;
-};
+export type CategoriesDataType = Array<CategoryType>
 
 export type CategoryPayload = {
   name: string;

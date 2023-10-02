@@ -45,14 +45,13 @@ const Items = () => {
   const submitCreateHandle = useCreate(data, setData, (formData) =>
     createItem(+categoryId, formData));
 
-  const submitEditHandle = useEdit(data, setData, (id, formData) =>
-    editItem(+categoryId, id, formData));
+  const submitEditHandle = useEdit(data, setData, (id, formData) => editItem(id, formData));
 
   const submitDeleteHandle = useDelete(
     data,
     setData,
     setIsLoading,
-    (id) => removeItem(+categoryId, id),
+    (id) => removeItem(id),
     (pageNumber) => fetchItemList(categoryId, pageNumber),
   );
 
@@ -87,7 +86,7 @@ const Items = () => {
     const toBeEditItem = data.items.find((item) => item.id === id);
 
     if (toBeEditItem) {
-      if (user.id && Number(user.id) !== toBeEditItem.author.id) {
+      if (user.id && Number(user.id) !== toBeEditItem.creatorId) {
         handleUserIsNotAuthor(`item ${toBeEditItem.id}`);
         return;
       }
@@ -120,7 +119,7 @@ const Items = () => {
 
     if (toBeDeleteItem) {
       if (toBeDeleteItem) {
-        if (user.id && Number(user.id) !== toBeDeleteItem.author.id) {
+        if (user.id && Number(user.id) !== toBeDeleteItem.creatorId) {
           handleUserIsNotAuthor(`item ${toBeDeleteItem.id}`);
           return;
         }
@@ -172,7 +171,6 @@ const Items = () => {
             title: category.name,
             href: `/categories/${category.id}/items`,
           },
-
         ];
 
         dispatch(setBreadcrumb(newBreadcrumb));

@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { Header as AhaHeader, Dropdown, Icon } from '@ahaui/react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector, useTypedDispatch } from 'hooks';
-import { AUTH_STORAGE_KEY } from 'constants/storage';
 import { userSelector } from 'redux/reducers/user.';
-import { getUserInfo, logout } from 'redux/actions/user';
+import { logout } from 'redux/actions/user';
 import { ReactComponent as Logo } from 'assets/images/logo.svg';
 import styles from './Header.module.scss';
 
@@ -17,17 +16,6 @@ const Header = () => {
 
   useEffect(() => {
     if (isFetch === 0) {
-      if (localStorage.getItem(AUTH_STORAGE_KEY) && !user.id && !user.name) {
-        dispatch(getUserInfo())
-          .then(() => {
-            if (location.pathname === '/login' || location.pathname === '/signup') {
-              navigate('/');
-            }
-          })
-          .catch(() => {
-            dispatch(logout());
-          });
-      }
       setIsFetch((prev) => prev + 1);
     }
   }, [dispatch, navigate, user, isFetch, location.pathname]);
@@ -51,7 +39,11 @@ const Header = () => {
               <Dropdown.Toggle className="u-textLight u-lineHeightNone">
                 <div className="u-flex u-alignItemsCenter">
                   <Icon name="contact" size="medium" className="u-marginRightTiny" />
-                  <div>{user.name}</div>
+                  <div>
+                    User ID:
+                    {' '}
+                    {user.id}
+                  </div>
                 </div>
               </Dropdown.Toggle>
               <Dropdown.Container

@@ -1,7 +1,6 @@
 export const EndPoints = {
-  REGISTER: '/users',
-  LOGIN: '/auth',
-  GET_USER_INFO: '/users/me',
+  REGISTER: '/register',
+  LOGIN: '/login',
   CATEGORIES: '/categories',
-  getItemEndPoint: (categoryId:number|string) => `/categories/${categoryId}/items`,
+  getItemEndPoint: () => '/items',
 };

@@ -1,11 +1,9 @@
 export type ItemType = {
   id: number;
+  name: string;
   description: string;
-  imageUrl: string;
-  author: {
-    id: number;
-    name: string;
-  };
+  imageUrl?: string;
+  creatorId: number;
   categoryId: number;
 };
 
@@ -15,6 +13,7 @@ export type ItemsDataType = {
 };
 
 export type ItemPayload = {
-  imageUrl:string,
-  description: string
-}
+  name: string;
+  imageUrl?: string;
+  description: string;
+};

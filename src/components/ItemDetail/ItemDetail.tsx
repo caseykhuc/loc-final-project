@@ -26,27 +26,29 @@ const ItemDetail = () => {
   useEffect(() => {
     if (breadcrumb.length === 0 && !itemLoading && item) {
       setCategoryLoading(true);
-      dispatch(fetchCategoryDetail(+categoryId)).then((category) => {
-        const newBreadcrumb = [
-          {
-            title: 'Manage Category',
-            href: '/categories',
-          },
-          {
-            title: `${category.name}`,
-            href: `/categories/${categoryId}/items`,
-          },
-          {
-            title: `Item ${item.id}`,
-            href: `categories/${categoryId}/items/${item.id}`,
-          },
-        ];
+      dispatch(fetchCategoryDetail(+categoryId))
+        .then((category) => {
+          const newBreadcrumb = [
+            {
+              title: 'Manage Category',
+              href: '/categories',
+            },
+            {
+              title: `${category.name}`,
+              href: `/categories/${categoryId}/items`,
+            },
+            {
+              title: `Item ${item.id}`,
+              href: `categories/${categoryId}/items/${item.id}`,
+            },
+          ];
 
-        dispatch(setBreadcrumb(newBreadcrumb));
-        setCategoryLoading(false);
-      }).catch(() => {
-        setCategoryLoading(false);
-      });
+          dispatch(setBreadcrumb(newBreadcrumb));
+          setCategoryLoading(false);
+        })
+        .catch(() => {
+          setCategoryLoading(false);
+        });
     }
   }, [breadcrumb.length, categoryId, dispatch, item, itemLoading]);
 
@@ -73,7 +75,7 @@ const ItemDetail = () => {
                 {item ? `Item ${item.id}` : 'Item'}
               </h1>
               <span className="u-text300 u-marginNone u-textNeutral100">
-                {item ? item.author.name : 'Author'}
+                {item ? item.creatorId : 'N/A'}
               </span>
               <p className="u-text400 u-marginTopSmall u-fontRegular">
                 {item ? item.description : 'Description'}

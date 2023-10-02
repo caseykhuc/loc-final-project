@@ -1,15 +1,19 @@
 import { RootState } from 'redux/store';
 import { User } from 'types/redux';
+import jwtDecode from 'jwt-decode';
+import { AUTH_STORAGE_KEY } from 'constants/storage';
 
 type Action = {
   type: string;
   payload?: User;
 };
 
+const accessToken = localStorage.getItem(AUTH_STORAGE_KEY) || '';
+const { sub } = jwtDecode<{ sub: number }>(accessToken);
+
 const initialState: User = {
-  name: '',
-  id: '',
-  isLoggedIn: false,
+  id: sub,
+  isLoggedIn: !!sub,
 };
 
 const userReducer = (state = initialState, action: Action) => {
@@ -40,8 +44,7 @@ const userReducer = (state = initialState, action: Action) => {
 
     case 'LOGOUT':
       return {
-        name: '',
-        id: '',
+        id: undefined,
         isLoggedIn: false,
       };
 

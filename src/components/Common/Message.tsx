@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,11 +32,19 @@ const Message = () => {
     // If API return error
     if (message.status && message.error) {
       const messageError = message.error;
-      if (messageError.data) {
-        Object.keys(message.error.data).forEach((key) => toast.error(`${message.status}: ${messageError.data[key][0]}`));
+
+      // @ts-ignore
+      if (messageError.errorMessage) {
+        // @ts-ignore
+        toast.error(`${message.status}: ${messageError.errorMessage}`);
       }
-      else {
-        toast.error(`${message.status}: ${message.error.message}`);
+
+      // @ts-ignore
+      if (messageError.errorData) {
+        // @ts-ignore
+        message.error.errorData.forEach((keyError) =>
+          // @ts-ignore
+          toast.error(`${message.status}: ${keyError.msg}`));
       }
     }
 

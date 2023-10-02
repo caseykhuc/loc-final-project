@@ -3,11 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Form, Button, Loader } from '@ahaui/react';
 import { useForm } from 'react-hook-form';
 import classNames from 'classnames';
-import {
-  register as myRegister,
-  login,
-  getUserInfo,
-} from 'redux/actions/user';
+import { register as myRegister, login } from 'redux/actions/user';
 import { EMAIL_REGEX, NAME_REGEX } from 'constants/validation';
 import { AUTH_STORAGE_KEY } from 'constants/storage';
 import { isEmpty } from 'utils/library';
@@ -38,9 +34,6 @@ const SignUp = () => {
         .then(() => dispatch(login(email, password)))
         .then((resData) => {
           localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(resData));
-          return dispatch(getUserInfo());
-        })
-        .then(() => {
           setIsLoading(false);
           if (prevPath !== '/login' && prevPath !== '/signup') {
             navigate(prevPath);
@@ -66,11 +59,7 @@ const SignUp = () => {
         'u-backgroundWhite u-paddingVerticalMedium u-paddingHorizontalMedium u-positionAbsolute u-positionCenter u-flex u-flexColumn u-shadowMedium u-roundedMedium',
       )}
     >
-      <Logo
-        width={40}
-        height={40}
-        className="u-marginLeftAuto u-marginRightAuto"
-      />
+      <Logo width={40} height={40} className="u-marginLeftAuto u-marginRightAuto" />
       <h1 className="u-textCenter u-marginTopExtraSmall u-marginBottomMedium u-text800">
         Register to Hello
       </h1>
@@ -81,8 +70,7 @@ const SignUp = () => {
           placeholder="Your name"
           {...register('name', {
             validate: {
-              isEmpty: (value: string) =>
-                isEmpty(value) || 'Please enter your name',
+              isEmpty: (value: string) => isEmpty(value) || 'Please enter your name',
             },
             maxLength: {
               value: 30,
@@ -90,7 +78,8 @@ const SignUp = () => {
             },
             pattern: {
               value: NAME_REGEX,
-              message: 'Name should not contain any special characters, numbers or have more than one space between words',
+              message:
+                'Name should not contain any special characters, numbers or have more than one space between words',
             },
           })}
         />
@@ -111,13 +100,11 @@ const SignUp = () => {
               message: 'Maximum length of email is 30 characters',
             },
             validate: {
-              isEmpty: (value: string) =>
-                isEmpty(value) || 'Please enter your email',
+              isEmpty: (value: string) => isEmpty(value) || 'Please enter your email',
             },
           })}
         />
         {errors.email && <InlineError>{errors.email.message}</InlineError>}
-
       </Form.Group>
 
       <Form.Group sizeControl="large">
@@ -126,8 +113,7 @@ const SignUp = () => {
           placeholder="Password"
           {...register('password', {
             validate: {
-              isEmpty: (value: string) =>
-                isEmpty(value) || 'Please enter your password',
+              isEmpty: (value: string) => isEmpty(value) || 'Please enter your password',
             },
             minLength: {
               value: 6,
@@ -142,9 +128,7 @@ const SignUp = () => {
       <Link
         to="/login"
         className="u-marginLeftAuto u-marginBottomSmall u-textPrimary hover:u-textPrimary hover:u-textUnderline"
-        state={
-          { prevPath }
-        }
+        state={{ prevPath }}
       >
         I already have an account
       </Link>

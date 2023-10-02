@@ -3,15 +3,14 @@ import { Link } from 'react-router-dom';
 import { Icon } from '@ahaui/react';
 import { addBreadcrumb } from 'redux/actions/breadcrumb';
 import { useTypedDispatch } from 'hooks';
-import { CategoryType } from 'components/Categories/CategoriesType';
+import { CategoryType } from 'types/category';
 
 type TableProps = {
   list: Array<CategoryType> | undefined;
-  editHandle: (arg1: number) => void;
   removeHandle: (arg1: number) => void;
 };
 
-const Table: React.FC<TableProps> = ({ list, editHandle, removeHandle }) => {
+const Table: React.FC<TableProps> = ({ list, removeHandle }) => {
   const dispatch = useTypedDispatch();
 
   return (
@@ -33,62 +32,51 @@ const Table: React.FC<TableProps> = ({ list, editHandle, removeHandle }) => {
             </thead>
             <tbody>
               {list
-              && list.map((category) => (
-                <tr key={category.id}>
-                  <td width="20px">{category.id}</td>
-                  <td width="100px">
-                    <img
-                      width="100%"
-                      height="auto"
-                      style={{ objectFit: 'cover' }}
-                      src={category.imageUrl}
-                      alt=""
-                    />
-                  </td>
-                  <td width="200px">
-                    <Link
-                      to={`/categories/${category.id}/items`}
-                      onClick={() => {
-                        dispatch(
-                          addBreadcrumb([
-                            {
-                              title: category.name,
-                              href: `/categories/${category.id}/items`,
-                            },
-                          ]),
-                        );
-                      }}
-                    >
-                      {category.name}
-                    </Link>
-                  </td>
-                  <td>{category.description}</td>
+                && list.map((category) => (
+                  <tr key={category.id}>
+                    <td width="20px">{category.id}</td>
+                    <td width="100px">
+                      <img
+                        width="100%"
+                        height="auto"
+                        style={{ objectFit: 'cover' }}
+                        src={category.imageUrl}
+                        alt=""
+                      />
+                    </td>
+                    <td width="200px">
+                      <Link
+                        to={`/categories/${category.id}/items`}
+                        onClick={() => {
+                          dispatch(
+                            addBreadcrumb([
+                              {
+                                title: category.name,
+                                href: `/categories/${category.id}/items`,
+                              },
+                            ]),
+                          );
+                        }}
+                      >
+                        {category.name}
+                      </Link>
+                    </td>
+                    <td>{category.description}</td>
 
-                  <td style={{ whiteSpace: 'nowrap' }} width="100px">
-                    <div
-                      className="u-inlineBlock u-paddingExtraSmall u-roundedCircle hover:u-backgroundLightest hover:u-textPrimary u-cursorPointer"
-                      onClick={() => editHandle(category.id)}
-                      onKeyPress={() => null}
-                      role="button"
-                      tabIndex={0}
-                      aria-label="Edit category"
-                    >
-                      <Icon size="small" name="edit" />
-                    </div>
-
-                    <div
-                      className="u-inlineBlock u-paddingExtraSmall u-roundedCircle hover:u-backgroundLightest hover:u-textPrimary u-cursorPointer"
-                      onClick={() => removeHandle(category.id)}
-                      onKeyPress={() => null}
-                      role="button"
-                      tabIndex={0}
-                      aria-label="Remove category"
-                    >
-                      <Icon size="small" name="trash" />
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    <td style={{ whiteSpace: 'nowrap' }} width="100px">
+                      <div
+                        className="u-inlineBlock u-paddingExtraSmall u-roundedCircle hover:u-backgroundLightest hover:u-textPrimary u-cursorPointer"
+                        onClick={() => removeHandle(category.id)}
+                        onKeyPress={() => null}
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Remove category"
+                      >
+                        <Icon size="small" name="trash" />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

@@ -1,0 +1,18 @@
+.page {
+  .pageContent {
+    border: 1px solid #dbdbdb;
+    header {
+      border-bottom: 1px solid #dbdbdb;
+    }
+  }
+
+
+
+  tbody td,
+  thead th {
+    vertical-align: middle;
+  }
+  a {
+    text-decoration: none;
+  }
+}

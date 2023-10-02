@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Form, Button, Loader } from '@ahaui/react';
-import { getUserInfo, login } from 'redux/actions/user';
+import { login } from 'redux/actions/user';
 import { IFormLoginInputs } from 'types/form';
 import { EMAIL_REGEX } from 'constants/validation';
 import { AUTH_STORAGE_KEY } from 'constants/storage';
@@ -35,9 +35,6 @@ const Login = () => {
       dispatch(login(data.email, data.password))
         .then((resData) => {
           localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(resData));
-          return dispatch(getUserInfo());
-        })
-        .then(() => {
           if (prevPath !== '/login' && prevPath !== '/signup') {
             navigate(prevPath);
           }
@@ -80,13 +77,11 @@ const Login = () => {
               message: 'Maximum length of email is 30 characters',
             },
             validate: {
-              isEmpty: (value: string) =>
-                isEmpty(value) || 'Please enter your email',
+              isEmpty: (value: string) => isEmpty(value) || 'Please enter your email',
             },
           })}
         />
         {errors.email && <InlineError>{errors.email.message}</InlineError>}
-
       </Form.Group>
 
       <Form.Group sizeControl="large">
@@ -95,8 +90,7 @@ const Login = () => {
           placeholder="Password"
           {...register('password', {
             validate: {
-              isEmpty: (value: string) =>
-                isEmpty(value) || 'Please enter your password',
+              isEmpty: (value: string) => isEmpty(value) || 'Please enter your password',
             },
             minLength: {
               value: 6,
@@ -111,9 +105,7 @@ const Login = () => {
       <Link
         to="/signup"
         className="u-marginLeftAuto u-marginBottomSmall u-textPrimary hover:u-textPrimary hover:u-textUnderline"
-        state={
-          { prevPath }
-        }
+        state={{ prevPath }}
       >
         Create account
       </Link>

@@ -1,8 +1,7 @@
-import { TypedDispatch } from 'redux/store';
-import { EndPoints } from 'constants/api';
-import { ITEMS_PER_PAGE } from 'constants/pagination';
-import helper from 'services/helper';
 import { ItemPayload } from 'components/Items/ItemsType';
+import { ITEMS_PER_PAGE } from 'constants/pagination';
+import { TypedDispatch } from 'redux/store';
+import helper from 'services/helper';
 import { handleAsyncAction } from './utils';
 
 export const ItemActions = {
@@ -13,32 +12,31 @@ export const ItemActions = {
   DELETE_ITEM: 'DELETE_ITEM',
 };
 
-export const fetchItemDetail = (categoryId: number, id:number) =>
-  (dispatch: TypedDispatch) => {
-    const url = `${EndPoints.getItemEndPoint(categoryId)}/${id}`;
-    return handleAsyncAction(dispatch, ItemActions.FETCH_ITEM_DETAIL, () => helper.get(url));
-  };
+export const fetchItemDetail = (categoryId: number, id: number) => (dispatch: TypedDispatch) => {
+  const url = `/categories/${categoryId}/items/${id}`;
+  return handleAsyncAction(dispatch, ItemActions.FETCH_ITEM_DETAIL, () => helper.get(url));
+};
 
 export const fetchItemList = (categoryId: number, pageNumber: number, limit: number = ITEMS_PER_PAGE) =>
   (dispatch: TypedDispatch) => {
     const offset = (pageNumber - 1) * limit;
-    const url = `${EndPoints.getItemEndPoint(categoryId)}?offset=${offset}&limit=${limit}`;
+    const url = `/categories/${categoryId}/items?offset=${offset}&limit=${limit}`;
 
     return handleAsyncAction(dispatch, ItemActions.FETCH_ITEM_LIST, () => helper.get(url));
   };
 
 export const createItem = (categoryId: number, payload: ItemPayload) => (dispatch: TypedDispatch) =>
   handleAsyncAction(dispatch, ItemActions.CREATE_ITEM, () =>
-    helper.postWithAuthentication(EndPoints.getItemEndPoint(categoryId), payload));
+    helper.postWithAuthentication(`/categories/${categoryId}/items`, payload));
 
-export const editItem = (categoryId: number, id: number, payload: ItemPayload) => (dispatch: TypedDispatch) => {
-  const url = `${EndPoints.getItemEndPoint(categoryId)}/${id}`;
+export const editItem = (id: number, payload: ItemPayload) => (dispatch: TypedDispatch) => {
+  const url = `/items/${id}`;
   return handleAsyncAction(dispatch, ItemActions.EDIT_ITEM, () =>
     helper.putWithAuthentication(url, payload));
 };
 
-export const removeItem = (categoryId:number, id: number) => (dispatch: TypedDispatch) => {
-  const url = `${EndPoints.getItemEndPoint(categoryId)}/${id}`;
+export const removeItem = (id: number) => (dispatch: TypedDispatch) => {
+  const url = `/items/${id}`;
   return handleAsyncAction(dispatch, ItemActions.DELETE_ITEM, () =>
     helper.deleteWithAuthentication(url));
 };

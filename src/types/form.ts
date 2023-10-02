@@ -11,11 +11,11 @@ export type IFormLoginInputs = {
 
 export type IFormCategoryInputs = {
   name: string;
-  description: string;
-  imageUrl: string;
+  imageUrl?: string;
 };
 
 export type IFormItemInputs = {
+  name: string;
   description: string;
-  imageUrl: string;
+  imageUrl?: string;
 };

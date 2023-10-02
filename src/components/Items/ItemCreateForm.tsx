@@ -28,6 +28,7 @@ const ItemCreateForm: React.FC<CreateFormProps> = ({ submitHandle, closeHandle, 
       ? {
         description: initValue.description,
         imageUrl: initValue.imageUrl,
+        name: initValue.name,
       }
       : {},
   });
@@ -54,10 +55,10 @@ const ItemCreateForm: React.FC<CreateFormProps> = ({ submitHandle, closeHandle, 
               },
 
               validate: {
-                isEmpty: (value: string) =>
-                  isEmpty(value) || 'Please enter your item image URL',
-                isURL: (value: string) => isURL(value) || 'Please enter a valid URL',
+                isURL: (value: string | undefined) =>
+                  (value ? (isURL(value) || 'Please enter a valid URL') : undefined),
               },
+              required: false,
             })}
           />
 
@@ -67,15 +68,37 @@ const ItemCreateForm: React.FC<CreateFormProps> = ({ submitHandle, closeHandle, 
         <Form.Group sizeControl="large">
           <Form.Input
             type="text"
+            placeholder="Name"
+            {...register('name', {
+              maxLength: {
+                value: 256,
+                message: 'Maximum length of name is 255 characters',
+              },
+              validate: {
+                isEmpty: (value: string) => isEmpty(value) || 'Please enter your item name',
+              },
+
+              pattern: {
+                value: TABLE_ITEM_NAME_REGEX,
+                message: 'Website only supports English',
+              },
+            })}
+          />
+
+          {errors.description && <InlineError>{errors.description.message}</InlineError>}
+        </Form.Group>
+
+        <Form.Group sizeControl="large">
+          <Form.Input
+            type="text"
             placeholder="Description"
             {...register('description', {
               maxLength: {
-                value: 200,
-                message: 'Maximum length of description is 200 characters',
+                value: 5000,
+                message: 'Maximum length of description is 5000 characters',
               },
               validate: {
-                isEmpty: (value: string) =>
-                  isEmpty(value) || 'Please enter your item description',
+                isEmpty: (value: string) => isEmpty(value) || 'Please enter your item description',
               },
 
               pattern: {

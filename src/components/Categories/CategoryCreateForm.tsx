@@ -8,7 +8,7 @@ import { isEmpty } from 'utils/library';
 import { TABLE_ITEM_NAME_REGEX } from 'constants/validation';
 import { IFormCategoryInputs } from 'types/form';
 import { InlineError } from 'components/Common';
-import { CategoryPayload } from 'components/Categories/CategoriesType';
+import { CategoryPayload } from 'types/category';
 
 type CreateFormProps = {
   submitHandle: (data: IFormCategoryInputs) => void;
@@ -31,7 +31,6 @@ const CategoryCreateForm: React.FC<CreateFormProps> = ({
     defaultValues: initValue
       ? {
         name: initValue.name,
-        description: initValue.description,
         imageUrl: initValue.imageUrl,
       }
       : {},
@@ -53,8 +52,8 @@ const CategoryCreateForm: React.FC<CreateFormProps> = ({
             placeholder="Name"
             {...register('name', {
               maxLength: {
-                value: 30,
-                message: 'Maximum length of name is 30 character',
+                value: 255,
+                message: 'Maximum length of name is 255 character',
               },
               validate: {
                 isEmpty: (value: string) => isEmpty(value) || 'Please enter your category name',
@@ -82,37 +81,12 @@ const CategoryCreateForm: React.FC<CreateFormProps> = ({
               },
 
               validate: {
-                isEmpty: (value: string) =>
-                  isEmpty(value) || 'Please enter your category image URL',
-                isURL: (value: string) => isURL(value) || 'Please enter a valid URL',
+                isURL: (value: string | undefined) =>
+                  value && (isURL(value) || 'Please enter a valid URL'),
               },
             })}
           />
           {errors.imageUrl && <InlineError>{errors.imageUrl.message}</InlineError>}
-        </Form.Group>
-
-        <Form.Group sizeControl="large">
-          <Form.Input
-            type="text"
-            placeholder="Description"
-            {...register('description', {
-              maxLength: {
-                value: 200,
-                message: 'Maximum length of description is 200 characters',
-              },
-              validate: {
-                isEmpty: (value: string) =>
-                  isEmpty(value) || 'Please enter your category description',
-              },
-
-              pattern: {
-                value: TABLE_ITEM_NAME_REGEX,
-                message: 'Website only supports English',
-              },
-            })}
-          />
-
-          {errors.description && <InlineError>{errors.description.message}</InlineError>}
         </Form.Group>
       </div>
       <div className="u-backgroundLightest u-paddingMedium u-flex u-alignItemsCenter u-justifyContentEnd u-roundedLarge">

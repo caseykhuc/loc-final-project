@@ -26,7 +26,3 @@ export const logout = () => (dispatch: TypedDispatch) => {
   localStorage.removeItem(AUTH_STORAGE_KEY);
   dispatch({ type: UserActions.LOGOUT });
 };
-
-export const getUserInfo = () => (dispatch: TypedDispatch) =>
-  handleAsyncAction(dispatch, UserActions.FETCH_USER_INFO, () =>
-    helper.getWithAuthentication(EndPoints.GET_USER_INFO));

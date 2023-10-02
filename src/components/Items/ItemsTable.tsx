@@ -60,7 +60,8 @@ const Table: React.FC<TableProps> = ({ categoryId, list, editHandle, removeHandl
                         alt=""
                       />
                     </td>
-                    <td width="150px">{item.author.name}</td>
+                    <td width="150px">{item.creatorId}</td>
+                    <td>{item.name}</td>
                     <td>{item.description}</td>
 
                     <td style={{ whiteSpace: 'nowrap' }} width="100px">
