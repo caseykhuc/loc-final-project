@@ -52,8 +52,8 @@ const PageWithTable: React.FC<PageWithTableProps> = ({
 
   const startOffSet = (currentPage - 1) * ITEMS_PER_PAGE + 1;
 
-  const lastOffSet = data && currentPage * ITEMS_PER_PAGE > data.totalItems
-    ? data.totalItems
+  const lastOffSet = data && currentPage * ITEMS_PER_PAGE > data.total
+    ? data.total
     : currentPage * ITEMS_PER_PAGE;
 
   const changeSearchParamsPage = useCallback(
@@ -175,17 +175,17 @@ const PageWithTable: React.FC<PageWithTableProps> = ({
               {renderTable(data?.items)}
 
               {/* Pagination section */}
-              {data && data.totalItems > 0 && (
+              {data && data.total > 0 && (
                 <div className="u-flex u-justifyContentBetween u-alignItemsCenter u-textNeutral100">
                   <div className="u-text200">
                     {data.items.length > 0
-                      && `Show ${startOffSet} to ${lastOffSet} of ${data.totalItems} entries`}
+                      && `Show ${startOffSet} to ${lastOffSet} of ${data.total} entries`}
                   </div>
 
                   <Pagination
                     currentPage={currentPage}
                     pageClick={changeSearchParamsPage}
-                    totalItems={data.totalItems}
+                    totalItems={data.total}
                   />
                 </div>
               )}

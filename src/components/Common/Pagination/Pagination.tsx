@@ -5,13 +5,13 @@ import { usePagination } from 'hooks';
 import { ReactComponent as Ellipsis } from 'assets/images/triple-dots-icon.svg';
 import styles from './Pagination.module.scss';
 
-type PaginationProps= {
-  pageClick : (page:number)=>void
-  currentPage: number
-  totalItems:number
-}
+type PaginationProps = {
+  pageClick: (page: number) => void;
+  currentPage: number;
+  totalItems: number;
+};
 
-const Pagination:React.FC<PaginationProps> = ({ pageClick, currentPage, totalItems }) => {
+const Pagination: React.FC<PaginationProps> = ({ pageClick, currentPage, totalItems }) => {
   const { paginationRange, totalPageCount } = usePagination({
     currentPage,
     totalItems,
@@ -33,7 +33,10 @@ const Pagination:React.FC<PaginationProps> = ({ pageClick, currentPage, totalIte
       {paginationRange.map((page) => {
         if (typeof page === 'string') {
           return (
-            <span className="u-marginHorizontalTiny u-cursorDefault u-text500" key={page + Math.random() * 10}>
+            <span
+              className="u-marginHorizontalTiny u-cursorDefault u-text500"
+              key={page + Math.random() * 10}
+            >
               <Ellipsis width={12} fill="#97a0af" />
             </span>
           );

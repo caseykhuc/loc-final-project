@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-const range = (start:number, end:number) => {
+const range = (start: number, end: number) => {
   const length = end - start + 1;
   /*
   Create an array of certain length and set the elements within it from
@@ -16,10 +16,16 @@ const usePagination = ({
   itemsPerPage,
   siblingCount = 1,
   currentPage,
-}:{
-  totalItems:number, itemsPerPage:number, siblingCount:number, currentPage:number
+}: {
+  totalItems: number;
+  itemsPerPage: number;
+  siblingCount: number;
+  currentPage: number;
 }) => {
-  const totalPageCount = useMemo(() => Math.ceil(totalItems / itemsPerPage), [itemsPerPage, totalItems]);
+  const totalPageCount = useMemo(
+    () => Math.ceil(totalItems / itemsPerPage),
+    [itemsPerPage, totalItems],
+  );
 
   const paginationRange = useMemo(() => {
     // components count is determined as siblingCount + firstPage + lastPage + currentPage + 2*DOTS
@@ -38,10 +44,7 @@ const usePagination = ({
     Calculate left and right sibling index and make sure they are within range 1 and totalPageCount
     */
     const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
-    const rightSiblingIndex = Math.min(
-      currentPage + siblingCount,
-      totalPageCount,
-    );
+    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPageCount);
 
     /*
       We do not show dots just when there is just one page number to be inserted between the extremes of sibling and the page limits i.e 1 and totalPageCount. Hence we are using leftSiblingIndex > 2 and rightSiblingIndex < totalPageCount - 2
@@ -67,10 +70,7 @@ const usePagination = ({
     */
     if (shouldShowLeftDots && !shouldShowRightDots) {
       const rightItemCount = 3 + 2 * siblingCount;
-      const rightRange = range(
-        totalPageCount - rightItemCount + 1,
-        totalPageCount,
-      );
+      const rightRange = range(totalPageCount - rightItemCount + 1, totalPageCount);
       return [firstPageIndex, DOTS, ...rightRange];
     }
 

@@ -27,7 +27,7 @@ const Items = () => {
   const user = useAppSelector(userSelector);
   const breadcrumb = useAppSelector(breadcrumbSelector);
   const [data, setData] = useState<ItemsDataType>({
-    totalItems: 0,
+    total: 0,
     items: [],
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);

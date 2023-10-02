@@ -7,8 +7,8 @@ import { useTypedDispatch, useCloseModal } from 'hooks';
 
 const useCreate = (
   data: GenericDataTable,
-  setData: (param:((prev:GenericDataTable)=>GenericDataTable) | GenericDataTable) => void,
-  dispatchAction: (...params:any[]) => (dispatch: TypedDispatch) => Promise<GenericDataTable>,
+  setData: (param: ((prev: GenericDataTable) => GenericDataTable) | GenericDataTable) => void,
+  dispatchAction: (...params: any[]) => (dispatch: TypedDispatch) => Promise<GenericDataTable>,
 ) => {
   const dispatch = useTypedDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,8 +19,8 @@ const useCreate = (
 
     dispatch(dispatchAction(formData))
       .then((resData: GenericDataTable) => {
-        const remainItemNumber = data.totalItems % ITEMS_PER_PAGE;
-        const totalPage = Math.floor(data.totalItems / ITEMS_PER_PAGE);
+        const remainItemNumber = data.total % ITEMS_PER_PAGE;
+        const totalPage = Math.floor(data.total / ITEMS_PER_PAGE);
         const lastPage = remainItemNumber ? totalPage + 1 : totalPage;
 
         const page = searchParams.get('page');
@@ -28,7 +28,7 @@ const useCreate = (
 
         if (remainItemNumber && pageNumber === lastPage) {
           setData((prev: GenericDataTable) => ({
-            totalItems: prev.totalItems + 1,
+            total: prev.total + 1,
             items: [...prev.items, resData],
           }));
         }
@@ -38,7 +38,7 @@ const useCreate = (
         }
         else if (!remainItemNumber && lastPage === 0) {
           setData((prev: GenericDataTable) => ({
-            totalItems: prev.totalItems + 1,
+            total: prev.total + 1,
             items: [...prev.items, resData],
           }));
         }

@@ -8,7 +8,7 @@ export type ItemType = {
 };
 
 export type ItemsDataType = {
-  totalItems: number;
+  total: number;
   items: Array<ItemType>;
 };
 

@@ -19,8 +19,7 @@ export const fetchItemDetail = (categoryId: number, id: number) => (dispatch: Ty
 
 export const fetchItemList = (categoryId: number, pageNumber: number, limit: number = ITEMS_PER_PAGE) =>
   (dispatch: TypedDispatch) => {
-    const offset = (pageNumber - 1) * limit;
-    const url = `/categories/${categoryId}/items?offset=${offset}&limit=${limit}`;
+    const url = `/categories/${categoryId}/items?page=${pageNumber}&number_per_page=${limit}`;
 
     return handleAsyncAction(dispatch, ItemActions.FETCH_ITEM_LIST, () => helper.get(url));
   };
