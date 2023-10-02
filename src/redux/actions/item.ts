@@ -13,7 +13,7 @@ export const ItemActions = {
 };
 
 export const fetchItemDetail = (categoryId: number, id: number) => (dispatch: TypedDispatch) => {
-  const url = `/categories/${categoryId}/items/${id}`;
+  const url = `/items/${id}`;
   return handleAsyncAction(dispatch, ItemActions.FETCH_ITEM_DETAIL, () => helper.get(url));
 };
 
